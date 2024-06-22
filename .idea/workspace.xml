@@ -5,11 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c46d68cc-089c-49de-a0cf-91324d5dcaaf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/TaskFlow.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TaskFlow.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/AddBoard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/AddDepartment.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/AddProject.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/AddSubtask.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TaskFlow/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/TaskFlow/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaskFlow/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/TaskFlow/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaskFlowAPP/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/TaskFlowAPP/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaskFlowAPP/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/TaskFlowAPP/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaskFlowAPP/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/TaskFlowAPP/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ProtectedRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ProtectedRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +33,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -50,21 +61,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Django Server.TaskFlow.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Django Server.TaskFlow.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "ts.external.directory.path": "D:\\PyCharm 2024.1.3\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="TaskFlow" type="Python.DjangoServer" factoryName="Django server">
       <module name="TaskFlow" />

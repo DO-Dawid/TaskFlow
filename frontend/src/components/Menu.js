@@ -1,27 +1,26 @@
+// Menu.js
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const Menu = ({ auth, setAuth }) => {
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        setAuth(false);
-        navigate('/login');
-    };
-
+const Menu = ({ isAuthenticated, username, logout }) => {
     return (
         <nav>
             <ul>
-                <li><Link to="/">Home</Link></li>
-                {auth ? (
+                {isAuthenticated ? (
                     <>
-                        <li><button onClick={handleLogout}>Logout</button></li>
+                        <li>Welcome, {username}</li>
+                        <li><Link to="/home">Home</Link></li>
+                        <li><Link to="/addtask">Add Task</Link></li>
+                        <li><Link to="/addproject">Add Project</Link></li>
+                        <li><Link to="/adddepartment">Add Department</Link></li>
+                        <li><Link to="/addsubtask">Add Subtask</Link></li>
+                        <li><Link to="/addboard">Add Board</Link></li>
+                        <li><button onClick={logout}>Logout</button></li>
                     </>
                 ) : (
                     <>
                         <li><Link to="/login">Login</Link></li>
-                        <li><Link to="/register">Register</Link></li> {/* Dodaj link do rejestracji */}
+                        <li><Link to="/register">Register</Link></li>
                     </>
                 )}
             </ul>

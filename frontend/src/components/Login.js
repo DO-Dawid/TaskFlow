@@ -1,9 +1,10 @@
+// Login.js
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const Login = ({ setAuth }) => {
-    const [username, setUsername] = useState('');
+function Login({ setAuth, setUsername }) {
+    const [username, setLoginUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -11,24 +12,18 @@ const Login = ({ setAuth }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/token/', { username, password }, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+            const response = await axios.post('http://localhost:8000/api/token/', {
+                username,
+                password
             });
-            if (response.status === 200) {
-                localStorage.setItem('token', response.data.access);
-                setAuth(true);
-                navigate('/');
-            } else {
-                setError(response.data.detail || 'Login failed. Please try again.');
-            }
-        } catch (error) {
-            if (error.response && error.response.data) {
-                setError(error.response.data.detail || `Login failed. Server response: ${JSON.stringify(error.response.data)}`);
-            } else {
-                setError(`Login failed. Please try again. Error: ${error.message}`);
-            }
+            localStorage.setItem('token', response.data.access);
+            localStorage.setItem('username', response.data.username);
+            setAuth(true);
+            setUsername(response.data.username);
+            navigate('/home');
+        } catch (err) {
+            setError('Login failed. Please try again.');
+            console.error(err);
         }
     };
 
@@ -36,23 +31,29 @@ const Login = ({ setAuth }) => {
         <div>
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                <div>
+                    <label>Username</label>
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setLoginUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                {error && <p style={{color: 'red'}}>{error}</p>}
                 <button type="submit">Login</button>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
             </form>
         </div>
     );
-};
+}
 
 export default Login;
