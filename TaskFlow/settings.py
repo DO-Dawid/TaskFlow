@@ -75,7 +75,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'TaskFlow',
-        'HOST': 'localhost\\SQLEXPRESS',
+        'HOST': 'localhost\\INSERTGT',
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
@@ -83,6 +83,7 @@ DATABASES = {
         },
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

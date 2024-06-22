@@ -5,31 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c46d68cc-089c-49de-a0cf-91324d5dcaaf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/TaskFlow.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TaskFlow/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TaskFlow/asgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TaskFlow/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TaskFlow/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TaskFlow/wsgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TaskFlowAPP/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TaskFlowAPP/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Home.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Menu.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/ProtectedRoute.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Register.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/services/authService.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/TaskFlow.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/TaskFlow.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TaskFlow/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/TaskFlow/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +29,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;DO-Dawid&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DO-Dawid/TaskFlow.git&quot;,
+    &quot;accountId&quot;: &quot;798af5ea-02df-41d4-92da-f37a90b29ca0&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -58,20 +50,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Django Server.TaskFlow.executor": "Run",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Django Server.TaskFlow.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="TaskFlow" type="Python.DjangoServer" factoryName="Django server">
       <module name="TaskFlow" />
@@ -117,6 +110,10 @@
       <updated>1718954358515</updated>
       <workItem from="1718954372804" duration="119000" />
       <workItem from="1718954497994" duration="10766000" />
+      <workItem from="1719003210954" duration="2262000" />
+      <workItem from="1719006143696" duration="416000" />
+      <workItem from="1719006582179" duration="2854000" />
+      <workItem from="1719041721246" duration="755000" />
     </task>
     <servers />
   </component>
