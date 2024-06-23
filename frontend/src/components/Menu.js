@@ -1,8 +1,9 @@
 // Menu.js
+// add board -> <li><Link to="/addboard">Add Board</Link></li>
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
-const Menu = ({ isAuthenticated, username, logout }) => {
+const Menu = ({isAuthenticated, username, logout}) => {
     return (
         <nav>
             <ul>
@@ -14,8 +15,10 @@ const Menu = ({ isAuthenticated, username, logout }) => {
                         <li><Link to="/addproject">Add Project</Link></li>
                         <li><Link to="/adddepartment">Add Department</Link></li>
                         <li><Link to="/addsubtask">Add Subtask</Link></li>
-                        <li><Link to="/addboard">Add Board</Link></li>
-                        <li><button onClick={logout}>Logout</button></li>
+                        <li><Link to="/board">Board</Link></li>
+                        <li>
+                            <button onClick={logout}>Logout</button>
+                        </li>
                     </>
                 ) : (
                     <>

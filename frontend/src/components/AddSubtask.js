@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance';
+import AxiosInstance from "../axiosInstance";
 
 const AddSubtask = () => {
     const [title, setTitle] = useState('');
@@ -11,7 +12,7 @@ const AddSubtask = () => {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/tasks/');
+                const response = await AxiosInstance.get('http://localhost:8000/api/tasks/');
                 setTasks(response.data);
             } catch (err) {
                 console.error('Failed to fetch tasks:', err);
@@ -25,7 +26,7 @@ const AddSubtask = () => {
         e.preventDefault();
         const token = localStorage.getItem('token');
         try {
-            const response = await axios.post('http://localhost:8000/api/subtasks/', {
+            const response = await axiosInstance.post('http://localhost:8000/api/subtasks/', {
                 title,
                 task,
             }, {

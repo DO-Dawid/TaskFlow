@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
-from rest_framework import status, viewsets
-from rest_framework.decorators import api_view
+from rest_framework import status, viewsets, filters
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -36,6 +37,7 @@ def register(request):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def add_task(request):
     title = request.data.get('title')
     description = request.data.get('description')
@@ -91,28 +93,47 @@ class MyTokenObtainPairView(TokenObtainPairView):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['title', 'description']
+    ordering_fields = ['title', 'is_completed']
+
+    def get_queryset(self):
+        queryset = Task.objects.all()
+        department = self.request.query_params.get('department')
+        user = self.request.query_params.get('user')
+        if department:
+            queryset = queryset.filter(department__id=department)
+        if user:
+            queryset = queryset.filter(user__id=user)
+        return queryset
 
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class BoardViewSet(viewsets.ModelViewSet):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class SubtaskViewSet(viewsets.ModelViewSet):
     queryset = Subtask.objects.all()
     serializer_class = SubtaskSerializer
+    permission_classes = [IsAuthenticated]
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance';
 
 const AddDepartment = () => {
     const [name, setName] = useState('');
@@ -10,7 +10,7 @@ const AddDepartment = () => {
         e.preventDefault();
         const token = localStorage.getItem('token');
         try {
-            const response = await axios.post('http://localhost:8000/api/departments/', {
+            const response = await axiosInstance.post('http://localhost:8000/api/departments/', {
                 name,
             }, {
                 headers: {

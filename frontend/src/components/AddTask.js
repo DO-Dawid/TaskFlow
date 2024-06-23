@@ -1,6 +1,5 @@
-// AddTask.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance';
 
 const AddTask = () => {
     const [title, setTitle] = useState('');
@@ -18,7 +17,7 @@ const AddTask = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/users/');
+                const response = await axiosInstance.get('users/');
                 setUsers(response.data);
             } catch (err) {
                 console.error('Failed to fetch users:', err);
@@ -27,7 +26,7 @@ const AddTask = () => {
 
         const fetchDepartments = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/departments/');
+                const response = await axiosInstance.get('departments/');
                 setDepartments(response.data);
             } catch (err) {
                 console.error('Failed to fetch departments:', err);
@@ -36,7 +35,7 @@ const AddTask = () => {
 
         const fetchProjects = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/projects/');
+                const response = await axiosInstance.get('projects/');
                 setProjects(response.data);
             } catch (err) {
                 console.error('Failed to fetch projects:', err);
@@ -50,19 +49,14 @@ const AddTask = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
         try {
-            const response = await axios.post('http://localhost:8000/api/add_task/', {
+            const response = await axiosInstance.post('add_task/', {
                 title,
                 description,
                 user_id: userId,
                 department_id: departmentId,
                 project_id: projectId,
                 assigned_by_id: assignedById,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
             });
             setSuccess('Task added successfully');
             setError('');

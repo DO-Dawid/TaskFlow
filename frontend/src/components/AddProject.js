@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../axiosInstance';
 
 const AddProject = () => {
     const [name, setName] = useState('');
@@ -12,7 +12,7 @@ const AddProject = () => {
     useEffect(() => {
         const fetchDepartments = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/departments/');
+                const response = await axiosInstance.get('http://localhost:8000/api/departments/');
                 setDepartments(response.data);
             } catch (err) {
                 console.error('Failed to fetch departments:', err);
@@ -26,7 +26,7 @@ const AddProject = () => {
         e.preventDefault();
         const token = localStorage.getItem('token');
         try {
-            const response = await axios.post('http://localhost:8000/api/projects/', {
+            const response = await axiosInstance.post('http://localhost:8000/api/projects/', {
                 name,
                 description,
                 department,

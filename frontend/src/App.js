@@ -1,6 +1,5 @@
-// App.js
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import AddTask from './components/AddTask';
@@ -11,6 +10,7 @@ import AddBoard from './components/AddBoard';
 import Home from './components/Home';
 import Menu from './components/Menu';
 import ProtectedRoute from './components/ProtectedRoute';
+import Board from './components/Board';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -45,6 +45,7 @@ function App() {
                     <Route path="/addsubtask" element={<ProtectedRoute><AddSubtask /></ProtectedRoute>} />
                     <Route path="/addboard" element={<ProtectedRoute><AddBoard /></ProtectedRoute>} />
                     <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+                    <Route path="/board" element={<ProtectedRoute><Board /></ProtectedRoute>} />
                     <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
                 </Routes>
             </div>
