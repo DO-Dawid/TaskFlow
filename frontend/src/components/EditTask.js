@@ -1,7 +1,7 @@
-// EditTask.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
+
 
 const EditTask = () => {
     const { id } = useParams();
@@ -71,67 +71,61 @@ const EditTask = () => {
     }, [id]);
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem('token');
-
-    const taskData = {
-        title,
-        description,
-        user_id: userId,
-        department_id: departmentId,
-        project_id: projectId,
-        assigned_by_id: assignedById,
+        e.preventDefault();
+        const token = localStorage.getItem('token');
+        try {
+            await axiosInstance.put(`tasks/${id}/`, {
+                title,
+                description,
+                user_id: userId,
+                department_id: departmentId,
+                project_id: projectId,
+                assigned_by_id: assignedById,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setSuccess('Task updated successfully');
+            setError('');
+            navigate(`/task/${id}`);
+        } catch (err) {
+            setError('Failed to update task. Please try again.');
+            setSuccess('');
+        }
     };
-
-    console.log('Updating task with data:', taskData);  // Dodane logowanie danych
-
-    try {
-        await axiosInstance.put(`tasks/${id}/`, taskData, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        setSuccess('Task updated successfully');
-        setError('');
-        navigate(`/task/${id}`);
-    } catch (err) {
-        setError('Failed to update task. Please try again.');
-        setSuccess('');
-        console.error(err);
-    }
-
-
-};
 
     if (!task) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div>
+        <div className="container">
             <h2>Edit Task</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="form-group">
                     <label>Title</label>
                     <input
                         type="text"
+                        className="form-control"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Description</label>
                     <input
                         type="text"
+                        className="form-control"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         required
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label>User</label>
-                    <select value={userId} onChange={(e) => setUserId(e.target.value)} required>
+                    <select className="form-control" value={userId} onChange={(e) => setUserId(e.target.value)} required>
                         <option value="">Select User</option>
                         {users.map(user => (
                             <option key={user.id} value={user.id}>
@@ -140,9 +134,9 @@ const EditTask = () => {
                         ))}
                     </select>
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Department</label>
-                    <select value={departmentId} onChange={(e) => setDepartmentId(e.target.value)}>
+                    <select className="form-control" value={departmentId} onChange={(e) => setDepartmentId(e.target.value)}>
                         <option value="">Select Department</option>
                         {departments.map(department => (
                             <option key={department.id} value={department.id}>
@@ -151,9 +145,9 @@ const EditTask = () => {
                         ))}
                     </select>
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Project</label>
-                    <select value={projectId} onChange={(e) => setProjectId(e.target.value)}>
+                    <select className="form-control" value={projectId} onChange={(e) => setProjectId(e.target.value)}>
                         <option value="">Select Project</option>
                         {projects.map(project => (
                             <option key={project.id} value={project.id}>
@@ -162,9 +156,9 @@ const EditTask = () => {
                         ))}
                     </select>
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Assigned By</label>
-                    <select value={assignedById} onChange={(e) => setAssignedById(e.target.value)} required>
+                    <select className="form-control" value={assignedById} onChange={(e) => setAssignedById(e.target.value)} required>
                         <option value="">Select User</option>
                         {users.map(user => (
                             <option key={user.id} value={user.id}>
@@ -173,10 +167,10 @@ const EditTask = () => {
                         ))}
                     </select>
                 </div>
-                {error && <p style={{color: 'red'}}>{error}</p>}
-                {success && <p style={{color: 'green'}}>{success}</p>}
-                <button type="submit">Update Task</button>
-                <button type="button" onClick={() => navigate(`/task/${id}`)}>Cancel</button>
+                {error && <p className="text-danger">{error}</p>}
+                {success && <p className="text-success">{success}</p>}
+                <button type="submit" className="btn btn-primary">Update Task</button>
+                <button type="button" className="btn btn-secondary" onClick={() => navigate(`/task/${id}`)}>Cancel</button>
             </form>
         </div>
     );

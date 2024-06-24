@@ -8,17 +8,11 @@ const AddDepartment = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
         try {
-            const response = await axiosInstance.post('http://localhost:8000/api/departments/', {
-                name,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            await axiosInstance.post('departments/', { name });
             setSuccess('Department added successfully');
             setError('');
+            setName('');
         } catch (err) {
             setError('Failed to add department. Please try again.');
             setSuccess('');
@@ -26,21 +20,22 @@ const AddDepartment = () => {
     };
 
     return (
-        <div>
+        <div className="container">
             <h2>Add Department</h2>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Name</label>
+                <div className="form-group">
+                    <label>Department Name</label>
                     <input
                         type="text"
+                        className="form-control"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
                 </div>
-                {error && <p style={{color: 'red'}}>{error}</p>}
-                {success && <p style={{color: 'green'}}>{success}</p>}
-                <button type="submit">Add Department</button>
+                {error && <p className="text-danger">{error}</p>}
+                {success && <p className="text-success">{success}</p>}
+                <button type="submit" className="btn btn-primary">Add Department</button>
             </form>
         </div>
     );

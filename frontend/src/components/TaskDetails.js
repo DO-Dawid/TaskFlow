@@ -1,7 +1,7 @@
-// TaskDetail.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const TaskDetail = () => {
     const { id } = useParams();
@@ -43,20 +43,22 @@ const TaskDetail = () => {
     }
 
     return (
-        <div>
+        <div className="container mt-4">
             <h2>Task Details</h2>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <div>
-                <h3>{task.title}</h3>
-                <p>Description: {task.description}</p>
-                <p>Assigned to: {task.user ? task.user.username : 'None'}</p>
-                <p>Department: {task.department ? task.department.name : 'None'}</p>
-                <p>Project: {task.project ? task.project.name : 'None'}</p>
-                <p>Assigned by: {task.assigned_by ? task.assigned_by.username : 'None'}</p>
+            <div className="card">
+                <div className="card-body">
+                    <h3 className="card-title">{task.title}</h3>
+                    <p className="card-text">Description: {task.description}</p>
+                    <p className="card-text">Assigned to: {task.user.username}</p>
+                    <p className="card-text">Department: {task.department ? task.department.name : 'None'}</p>
+                    <p className="card-text">Project: {task.project ? task.project.name : 'None'}</p>
+                    <p className="card-text">Assigned by: {task.assigned_by.username}</p>
+                    <button className="btn btn-primary" onClick={() => navigate(`/edittask/${id}`)}>Edit</button>
+                    <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
+                    <button className="btn btn-secondary" onClick={() => navigate(`/board`)}>Back</button>
+                </div>
             </div>
-            <button onClick={() => navigate(`/edittask/${id}`)}>Edit</button>
-            <button onClick={handleDelete}>Delete</button>
-            <button onClick={() => navigate(`/board`)}>Back</button>
         </div>
     );
 };

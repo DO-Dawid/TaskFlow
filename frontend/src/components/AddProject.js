@@ -4,7 +4,7 @@ import axiosInstance from '../axiosInstance';
 const AddProject = () => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [department, setDepartment] = useState('');
+    const [departmentId, setDepartmentId] = useState('');
     const [departments, setDepartments] = useState([]);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -12,7 +12,7 @@ const AddProject = () => {
     useEffect(() => {
         const fetchDepartments = async () => {
             try {
-                const response = await axiosInstance.get('http://localhost:8000/api/departments/');
+                const response = await axiosInstance.get('departments/');
                 setDepartments(response.data);
             } catch (err) {
                 console.error('Failed to fetch departments:', err);
@@ -26,10 +26,10 @@ const AddProject = () => {
         e.preventDefault();
         const token = localStorage.getItem('token');
         try {
-            const response = await axiosInstance.post('http://localhost:8000/api/projects/', {
+            await axiosInstance.post('projects/', {
                 name,
                 description,
-                department,
+                department_id: departmentId,
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -44,30 +44,31 @@ const AddProject = () => {
     };
 
     return (
-        <div>
+        <div className="container">
             <h2>Add Project</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="form-group">
                     <label>Name</label>
                     <input
                         type="text"
+                        className="form-control"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Description</label>
                     <input
                         type="text"
+                        className="form-control"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        required
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Department</label>
-                    <select value={department} onChange={(e) => setDepartment(e.target.value)} required>
+                    <select className="form-control" value={departmentId} onChange={(e) => setDepartmentId(e.target.value)}>
                         <option value="">Select Department</option>
                         {departments.map(department => (
                             <option key={department.id} value={department.id}>
@@ -76,9 +77,9 @@ const AddProject = () => {
                         ))}
                     </select>
                 </div>
-                {error && <p style={{color: 'red'}}>{error}</p>}
-                {success && <p style={{color: 'green'}}>{success}</p>}
-                <button type="submit">Add Project</button>
+                {error && <p className="text-danger">{error}</p>}
+                {success && <p className="text-success">{success}</p>}
+                <button type="submit" className="btn btn-primary">Add Project</button>
             </form>
         </div>
     );

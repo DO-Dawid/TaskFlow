@@ -67,30 +67,32 @@ const AddTask = () => {
     };
 
     return (
-        <div>
+        <div className="container">
             <h2>Add Task</h2>
             <form onSubmit={handleSubmit}>
-                <div>
+                <div className="form-group">
                     <label>Title</label>
                     <input
                         type="text"
+                        className="form-control"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Description</label>
                     <input
                         type="text"
+                        className="form-control"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         required
                     />
                 </div>
-                <div>
+                <div className="form-group">
                     <label>User</label>
-                    <select value={userId} onChange={(e) => setUserId(e.target.value)} required>
+                    <select className="form-control" value={userId} onChange={(e) => setUserId(e.target.value)} required>
                         <option value="">Select User</option>
                         {users.map(user => (
                             <option key={user.id} value={user.id}>
@@ -99,9 +101,9 @@ const AddTask = () => {
                         ))}
                     </select>
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Department</label>
-                    <select value={departmentId} onChange={(e) => setDepartmentId(e.target.value)}>
+                    <select className="form-control" value={departmentId} onChange={(e) => setDepartmentId(e.target.value)}>
                         <option value="">Select Department</option>
                         {departments.map(department => (
                             <option key={department.id} value={department.id}>
@@ -110,9 +112,9 @@ const AddTask = () => {
                         ))}
                     </select>
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Project</label>
-                    <select value={projectId} onChange={(e) => setProjectId(e.target.value)}>
+                    <select className="form-control" value={projectId} onChange={(e) => setProjectId(e.target.value)}>
                         <option value="">Select Project</option>
                         {projects.map(project => (
                             <option key={project.id} value={project.id}>
@@ -121,9 +123,9 @@ const AddTask = () => {
                         ))}
                     </select>
                 </div>
-                <div>
+                <div className="form-group">
                     <label>Assigned By</label>
-                    <select value={assignedById} onChange={(e) => setAssignedById(e.target.value)} required>
+                    <select className="form-control" value={assignedById} onChange={(e) => setAssignedById(e.target.value)} required>
                         <option value="">Select User</option>
                         {users.map(user => (
                             <option key={user.id} value={user.id}>
@@ -132,9 +134,9 @@ const AddTask = () => {
                         ))}
                     </select>
                 </div>
-                {error && <p style={{color: 'red'}}>{error}</p>}
-                {success && <p style={{color: 'green'}}>{success}</p>}
-                <button type="submit">Add Task</button>
+                {error && <p className="text-danger">{error}</p>}
+                {success && <p className="text-success">{success}</p>}
+                <button type="submit" className="btn btn-primary">Add Task</button>
             </form>
         </div>
     );
