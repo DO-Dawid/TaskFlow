@@ -1,19 +1,25 @@
 // src/components/Board.js
 import React, { useState, useEffect } from 'react';
+import {Link} from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
+
+
 
 function Board() {
     const [tasks, setTasks] = useState([]);
     const [departments, setDepartments] = useState([]);
     const [users, setUsers] = useState([]);
+    const [projects, setProjects] = useState([]);
     const [selectedDepartment, setSelectedDepartment] = useState('');
     const [selectedUser, setSelectedUser] = useState('');
+    const [selectedProject, setSelectedProject] = useState('');
 
     useEffect(() => {
         fetchTasks();
         fetchDepartments();
         fetchUsers();
-    }, []);
+        fetchProjects();
+    }, [selectedUser, selectedProject, selectedDepartment]);
 
     const fetchTasks = async () => {
         try {
@@ -21,6 +27,7 @@ function Board() {
                 params: {
                     department: selectedDepartment,
                     user: selectedUser,
+                    project: selectedProject,
                 }
             });
             setTasks(response.data);
@@ -37,6 +44,15 @@ function Board() {
             console.error('Error fetching departments', error);
         }
     };
+
+    const fetchProjects = async () =>{
+        try{
+            const response = await axiosInstance.get('projects/');
+            setProjects(response.data)
+        } catch (error) {
+            console.error('Error fetching projects', error);
+        }
+    }
 
     const fetchUsers = async () => {
         try {
@@ -71,15 +87,26 @@ function Board() {
                     ))}
                 </select>
 
+                <label>Filter by Project</label>
+                <select value={selectedProject} onChange={(e) => setSelectedProject(e.target.value)}>
+                    <option value="">All Projects</option>
+                    {projects.map(project => (
+                        <option key={project.id} value={project.id}>{project.name}</option>
+                    ))}
+                </select>
+
                 <button onClick={handleFilterChange}>Apply Filters</button>
             </div>
             <div>
                 {tasks.map(task => (
                     <div key={task.id}>
-                        <h3>{task.title}</h3>
-                        <p>{task.description}</p>
-                        <p>Assigned to: {task.user.username}</p>
-                        <p>Department: {task.department ? task.department.name : 'None'}</p>
+                        <Link to={`/task/${task.id}`}>
+                            <h3>{task.title}</h3>
+                            <p>{task.description}</p>
+                            <p>Assigned to: {task.user.username}</p>
+                            <p>Department: {task.department ? task.department.name : 'None'}</p>
+                            <p>Project: {task.project ? task.project.name : 'None'}</p>
+                        </Link>
                     </div>
                 ))}
             </div>

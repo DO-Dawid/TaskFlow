@@ -102,11 +102,31 @@ class TaskViewSet(viewsets.ModelViewSet):
         queryset = Task.objects.all()
         department = self.request.query_params.get('department')
         user = self.request.query_params.get('user')
+        project = self.request.query_params.get('project')
         if department:
             queryset = queryset.filter(department__id=department)
         if user:
             queryset = queryset.filter(user__id=user)
+        if project:
+            queryset = queryset.filter(project__id=project)
         return queryset
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        try:
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+        except Exception as e:
+            logger.error(f"Error updating task: {str(e)}")
+            logger.error(f"Serializer errors: {serializer.errors}")
+            raise e
+        return Response(serializer.data)
+
+    def perform_update(self, serializer):
+        serializer.save()
+
 
 
 class DepartmentViewSet(viewsets.ModelViewSet):

@@ -11,6 +11,8 @@ import Home from './components/Home';
 import Menu from './components/Menu';
 import ProtectedRoute from './components/ProtectedRoute';
 import Board from './components/Board';
+import TaskDetail from "./components/TaskDetails";
+import EditTask from './components/EditTask';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -46,6 +48,8 @@ function App() {
                     <Route path="/addboard" element={<ProtectedRoute><AddBoard /></ProtectedRoute>} />
                     <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
                     <Route path="/board" element={<ProtectedRoute><Board /></ProtectedRoute>} />
+                    <Route path="/task/:id" element={<ProtectedRoute><TaskDetail /></ProtectedRoute>} />
+                    <Route path="/edittask/:id" element={<ProtectedRoute><EditTask /></ProtectedRoute>} />
                     <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
                 </Routes>
             </div>
