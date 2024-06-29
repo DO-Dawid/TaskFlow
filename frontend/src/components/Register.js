@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axiosInstance from '../axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -12,61 +12,55 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axiosInstance.post('/api/register/', { username, password, email }, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+            const response = await axios.post('http://localhost:8000/api/register/', {
+                username,
+                password,
+                email
             });
-            if (response.status === 201) {
-                navigate('/login');
-            } else {
-                setError(response.data.error || 'Registration failed. Please try again.');
-            }
+            console.log('Registration successful:', response.data);
+            navigate('/account-success');
         } catch (error) {
-            if (error.response && error.response.data) {
-                setError(error.response.data.error || `Registration failed. Server response: ${JSON.stringify(error.response.data)}`);
-            } else {
-                setError(`Registration failed. Please try again. Error: ${error.message}`);
-            }
+            setError(`Registration failed. Server response: ${error.response.data.error || error.response.data}`);
+            console.error('There was an error registering!', error);
         }
     };
 
     return (
         <div className="container mt-5">
             <h2>Register</h2>
+            {error && <div className="alert alert-danger" role="alert">{error}</div>}
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Username</label>
+                <div className="mb-3">
+                    <label className="form-label">Username</label>
                     <input
                         type="text"
                         className="form-control"
-                        placeholder="Username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        required
                     />
                 </div>
-                <div className="form-group">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
+                <div className="mb-3">
+                    <label className="form-label">Password</label>
                     <input
                         type="password"
                         className="form-control"
-                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Email</label>
+                    <input
+                        type="email"
+                        className="form-control"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
                     />
                 </div>
                 <button type="submit" className="btn btn-primary">Register</button>
-                {error && <p className="text-danger mt-2">{error}</p>}
             </form>
         </div>
     );

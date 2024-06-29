@@ -89,7 +89,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'TaskFlow',
-        'HOST': 'localhost\\INSERTGT',
+        'HOST': 'localhost\\SQLEXPRESS',
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',

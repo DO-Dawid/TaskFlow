@@ -30,17 +30,17 @@ function Login({ setAuth, setUsername }) {
         <div className="container mt-5">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
+                <div className="mb-3 form-group">
                     <label>Username</label>
                     <input
                         type="text"
-                        className="form-control"
+                        className="mb-3 form-control"
                         value={username}
                         onChange={(e) => setLoginUsername(e.target.value)}
                         required
                     />
                 </div>
-                <div className="form-group">
+                <div className="mb-3 form-group">
                     <label>Password</label>
                     <input
                         type="password"

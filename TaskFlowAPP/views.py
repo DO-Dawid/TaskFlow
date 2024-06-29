@@ -1,18 +1,22 @@
 from django.contrib.auth.models import User
 from rest_framework import status, viewsets, filters
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import Task, Department, Project, Board, Subtask, Comment
-from .serializers import TaskSerializer, DepartmentSerializer, ProjectSerializer, BoardSerializer, SubtaskSerializer, UserSerializer, CommentSerializer
+from .serializers import TaskSerializer, DepartmentSerializer, ProjectSerializer, BoardSerializer, SubtaskSerializer, \
+    UserSerializer, CommentSerializer
 import logging
 
 logger = logging.getLogger(__name__)
 
+
 @api_view(['POST'])
+@permission_classes([AllowAny])  # Dodaj to, aby endpoint był dostępny bez autoryzacji
 def register(request):
     username = request.data.get('username')
     password = request.data.get('password')
@@ -36,6 +40,7 @@ def register(request):
         logger.error(f"Error creating user: {e}")
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def add_task(request):
@@ -46,11 +51,13 @@ def add_task(request):
     project_id = request.data.get('project_id')
     assigned_by_id = request.data.get('assigned_by_id')
 
-    logger.info(f"Add task request received with title: {title}, user_id: {user_id}, department_id: {department_id}, project_id: {project_id}, assigned_by_id: {assigned_by_id}")
+    logger.info(
+        f"Add task request received with title: {title}, user_id: {user_id}, department_id: {department_id}, project_id: {project_id}, assigned_by_id: {assigned_by_id}")
 
     if not title or not user_id or not assigned_by_id:
         logger.error("Title, user_id, and assigned_by_id are required")
-        return Response({'error': 'Title, user_id, and assigned_by_id are required'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'Title, user_id, and assigned_by_id are required'},
+                        status=status.HTTP_400_BAD_REQUEST)
 
     try:
         user = User.objects.get(id=user_id)
@@ -71,6 +78,7 @@ def add_task(request):
     except Exception as e:
         logger.error(f"Error creating task: {e}")
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -95,6 +103,7 @@ def add_comment(request):
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -107,28 +116,34 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         data.update({'username': self.user.username})
         return data
 
+
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
     permission_classes = [IsAuthenticated]
 
+
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     permission_classes = [IsAuthenticated]
+
 
 class BoardViewSet(viewsets.ModelViewSet):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
     permission_classes = [IsAuthenticated]
 
+
 class SubtaskViewSet(viewsets.ModelViewSet):
     queryset = Subtask.objects.all()
     serializer_class = SubtaskSerializer
     permission_classes = [IsAuthenticated]
+
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
@@ -147,10 +162,12 @@ class TaskViewSet(viewsets.ModelViewSet):
             raise PermissionDenied("You did not create this task.")
         return super().destroy(request, *args, **kwargs)
 
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
+
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
@@ -158,4 +175,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        task_id = self.request.data.get('task')
+        task = Task.objects.get(id=task_id)
+        serializer.save(user=self.request.user, task=task)
+

@@ -42,7 +42,7 @@ const TaskDetail = () => {
         const token = localStorage.getItem('token');
         try {
             const response = await axiosInstance.post('comments/', {
-                task_id: id,
+                task: task.id,
                 content: newComment
             }, {
                 headers: {
@@ -56,6 +56,7 @@ const TaskDetail = () => {
             console.error(err);
         }
     };
+
 
     const handleDelete = async () => {
         const token = localStorage.getItem('token');

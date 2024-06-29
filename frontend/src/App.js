@@ -13,6 +13,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Board from './components/Board';
 import TaskDetail from "./components/TaskDetails";
 import EditTask from './components/EditTask';
+import AccountSuccess from './components/AccountSuccess'; // Import the new component
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -50,6 +51,7 @@ function App() {
                     <Route path="/board" element={<ProtectedRoute><Board /></ProtectedRoute>} />
                     <Route path="/task/:id" element={<ProtectedRoute><TaskDetail /></ProtectedRoute>} />
                     <Route path="/edittask/:id" element={<ProtectedRoute><EditTask /></ProtectedRoute>} />
+                    <Route path="/account-success" element={<AccountSuccess />} /> {/* Add this line */}
                     <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
                 </Routes>
             </div>
