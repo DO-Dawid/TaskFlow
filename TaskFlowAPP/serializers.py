@@ -1,7 +1,6 @@
-# serializers.py
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Task, Department, Project, Board, Subtask
+from .models import Task, Department, Project, Board, Subtask, Comment
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -16,6 +15,14 @@ class SubtaskSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'is_completed', 'task']
 
 
+class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'user', 'content', 'created_at']
+
+
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
@@ -28,24 +35,21 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'description', 'department']
 
 
+class TaskSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    department = DepartmentSerializer()
+    project = ProjectSerializer()
+    assigned_by = UserSerializer()
+    comments = CommentSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Task
+        fields = ['id', 'title', 'description', 'is_completed', 'user', 'department', 'project', 'assigned_by',
+                  'comments']
+        read_only_fields = ['assigned_by']
+
+
 class BoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
         fields = ['id', 'name', 'tasks']
-
-
-class TaskSerializer(serializers.ModelSerializer):
-    user_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source='user', write_only=True)
-    department_id = serializers.PrimaryKeyRelatedField(queryset=Department.objects.all(), source='department', write_only=True)
-    project_id = serializers.PrimaryKeyRelatedField(queryset=Project.objects.all(), source='project', write_only=True)
-    assigned_by_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source='assigned_by', write_only=True)
-
-    user = UserSerializer(read_only=True)
-    department = DepartmentSerializer(read_only=True)
-    project = ProjectSerializer(read_only=True)
-    assigned_by = UserSerializer(read_only=True)
-
-    class Meta:
-        model = Task
-        fields = ['id', 'title', 'description', 'is_completed', 'user_id', 'department_id', 'project_id', 'assigned_by_id', 'user', 'department', 'project', 'assigned_by']
-        read_only_fields = ['assigned_by', 'user', 'department', 'project']

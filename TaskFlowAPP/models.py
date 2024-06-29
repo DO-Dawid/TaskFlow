@@ -1,21 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
-
 class Role(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
-
 class Department(models.Model):
     name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
-
 
 class Project(models.Model):
     name = models.CharField(max_length=200)
@@ -24,7 +20,6 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class Task(models.Model):
     title = models.CharField(max_length=200)
@@ -45,7 +40,6 @@ class Task(models.Model):
         completed_subtasks = subtasks.filter(is_completed=True).count()
         return int((completed_subtasks / subtasks.count()) * 100)
 
-
 class Subtask(models.Model):
     title = models.CharField(max_length=200)
     is_completed = models.BooleanField(default=False)
@@ -54,10 +48,18 @@ class Subtask(models.Model):
     def __str__(self):
         return self.title
 
-
 class Board(models.Model):
     name = models.CharField(max_length=200)
     tasks = models.ManyToManyField(Task)
 
     def __str__(self):
         return self.name
+
+class Comment(models.Model):
+    task = models.ForeignKey(Task, related_name='comments', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment by {self.user} on {self.task}"
