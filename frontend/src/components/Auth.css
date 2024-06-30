@@ -1,0 +1,37 @@
+/* Auth.css */
+
+.auth-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 95.6vh;
+    background: url('../../public/banner.jpeg') no-repeat center center;
+    background-size: cover;
+}
+
+.auth-form {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-form h2 {
+    margin-bottom: 20px;
+}
+
+.auth-form .form-group {
+    margin-bottom: 15px;
+}
+
+.auth-form .form-control {
+    border-radius: 5px;
+}
+
+.auth-form .btn {
+    border-radius: 5px;
+    width: 100%;
+}

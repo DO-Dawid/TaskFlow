@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
+import './Background.css';
 
 const AddTask = () => {
     const [title, setTitle] = useState('');
@@ -73,7 +74,7 @@ const AddTask = () => {
     };
 
     return (
-        <div>
+        <div className="container mt-5">
             <h2>Add Task</h2>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
@@ -88,13 +89,12 @@ const AddTask = () => {
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Description</label>
-                    <input
-                        type="text"
+                    <textarea
                         className="form-control"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         required
-                    />
+                    ></textarea>
                 </div>
                 <div className="mb-3">
                     <label className="form-label">User</label>

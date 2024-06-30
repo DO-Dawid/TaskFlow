@@ -4,21 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c46d68cc-089c-49de-a0cf-91324d5dcaaf" name="Changes" comment="">
+    <list default="true" id="c46d68cc-089c-49de-a0cf-91324d5dcaaf" name="Changes" comment="fixed issues, added progrssbar, added automatic completion of tasks">
+      <change afterPath="$PROJECT_DIR$/frontend/public/background.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/banner.jpeg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/task_screenshot1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/task_screenshot2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Auth.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Home.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/background.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TaskFlowAPP/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/TaskFlowAPP/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TaskFlowAPP/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/TaskFlowAPP/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TaskFlowAPP/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/TaskFlowAPP/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddBoard.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AddDepartment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddDepartment.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/AddProject.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddProject.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/AddSubtask.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddSubtask.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/AddTask.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AddTask.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Board.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Board.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/EditTask.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/EditTask.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/TaskDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/TaskDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Register.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +64,12 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="Z:\TaskFlow\TaskFlow\frontend\public" />
+      <recent name="Z:\TaskFlow\TaskFlow\frontend\images" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="TaskFlow" type="Python.DjangoServer" factoryName="Django server">
       <module name="TaskFlow" />
@@ -110,6 +117,15 @@
       <workItem from="1718954372804" duration="119000" />
       <workItem from="1718954497994" duration="10766000" />
     </task>
+    <task id="LOCAL-00001" summary="fixed issues, added progrssbar, added automatic completion of tasks">
+      <option name="closed" value="true" />
+      <created>1719716402263</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1719716402263</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,5 +141,9 @@
         <option value="GitHub.CommitStatus" />
       </list>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fixed issues, added progrssbar, added automatic completion of tasks" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed issues, added progrssbar, added automatic completion of tasks" />
   </component>
 </project>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
+import './Background.css';
 
 const AddProject = () => {
     const [name, setName] = useState('');
@@ -47,11 +48,11 @@ const AddProject = () => {
     };
 
     return (
-        <div className="container">
-            <h2>Add Project</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Name</label>
+        <div className="container mt-5">
+            <h2 className="mb-4">Add Project</h2>
+            <form onSubmit={handleSubmit} className="card p-4 shadow">
+                <div className="mb-3">
+                    <label className="form-label">Name</label>
                     <input
                         type="text"
                         className="form-control"
@@ -60,18 +61,17 @@ const AddProject = () => {
                         required
                     />
                 </div>
-                <div className="form-group">
-                    <label>Description</label>
-                    <input
-                        type="text"
+                <div className="mb-3">
+                    <label className="form-label">Description</label>
+                    <textarea
                         className="form-control"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                    />
+                    ></textarea>
                 </div>
-                <div className="form-group">
-                    <label>Department</label>
-                    <select className="form-control" value={departmentId} onChange={(e) => setDepartmentId(e.target.value)}>
+                <div className="mb-3">
+                    <label className="form-label">Department</label>
+                    <select className="form-select" value={departmentId} onChange={(e) => setDepartmentId(e.target.value)}>
                         <option value="">Select Department</option>
                         {departments.map(department => (
                             <option key={department.id} value={department.id}>

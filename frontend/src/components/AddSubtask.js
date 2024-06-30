@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
+import './Background.css';
 
 const AddSubtask = () => {
     const { taskId } = useParams();
@@ -32,9 +33,9 @@ const AddSubtask = () => {
     };
 
     return (
-        <div className="container">
-            <h2>Add Subtask</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="container mt-5">
+            <h2 className="mb-4">Add Subtask</h2>
+            <form onSubmit={handleSubmit} className="card p-4 shadow">
                 <div className="mb-3">
                     <label className="form-label">Title</label>
                     <input
@@ -47,7 +48,7 @@ const AddSubtask = () => {
                 </div>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 {success && <p style={{ color: 'green' }}>{success}</p>}
-                <button type="submit" className="btn btn-primary">Add Subtask</button>
+                <button type="submit" className="btn btn-primary me-2">Add Subtask</button>
                 <button type="button" className="btn btn-secondary" onClick={() => navigate(`/task/${taskId}`)}>Cancel</button>
             </form>
         </div>
