@@ -147,7 +147,7 @@ const TaskDetail = () => {
                     <p className="card-text">Project: {task.project ? task.project.name : 'None'}</p>
                     <p className="card-text">Assigned by: {task.assigned_by?.username}</p>
                     <p className="card-text">Completion: {completionPercentage}%</p>
-                    <div className="progress">
+                    <div className="progress mb-3">
                         <div
                             className="progress-bar"
                             role="progressbar"
@@ -159,12 +159,12 @@ const TaskDetail = () => {
                             {completionPercentage}%
                         </div>
                     </div>
-                    <div>
+                    <div className="mb-3">
                         {task.assigned_by?.username === currentUser && (
-                            <>
+                            <div>
                                 <button onClick={handleEdit} className="btn btn-primary me-2">Edit</button>
                                 <button onClick={handleDelete} className="btn btn-danger">Delete</button>
-                            </>
+                            </div>
                         )}
                     </div>
                 </div>
