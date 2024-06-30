@@ -1,22 +1,17 @@
 from django.contrib.auth.models import User
 from rest_framework import status, viewsets, filters
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import Task, Department, Project, Board, Subtask, Comment
-from .serializers import TaskSerializer, DepartmentSerializer, ProjectSerializer, BoardSerializer, SubtaskSerializer, \
-    UserSerializer, CommentSerializer
+from .serializers import TaskSerializer, DepartmentSerializer, ProjectSerializer, BoardSerializer, SubtaskSerializer, UserSerializer, CommentSerializer
 import logging
 
 logger = logging.getLogger(__name__)
 
-
 @api_view(['POST'])
-@permission_classes([AllowAny])  # Dodaj to, aby endpoint był dostępny bez autoryzacji
 def register(request):
     username = request.data.get('username')
     password = request.data.get('password')
@@ -49,15 +44,13 @@ def add_task(request):
     user_id = request.data.get('user_id')
     department_id = request.data.get('department_id')
     project_id = request.data.get('project_id')
-    assigned_by_id = request.data.get('assigned_by_id')
+    assigned_by_id = request.user.id
 
-    logger.info(
-        f"Add task request received with title: {title}, user_id: {user_id}, department_id: {department_id}, project_id: {project_id}, assigned_by_id: {assigned_by_id}")
+    logger.info(f"Add task request received with title: {title}, user_id: {user_id}, department_id: {department_id}, project_id: {project_id}, assigned_by_id: {assigned_by_id}")
 
     if not title or not user_id or not assigned_by_id:
         logger.error("Title, user_id, and assigned_by_id are required")
-        return Response({'error': 'Title, user_id, and assigned_by_id are required'},
-                        status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'Title, user_id, and assigned_by_id are required'}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
         user = User.objects.get(id=user_id)
@@ -85,10 +78,10 @@ def add_task(request):
 def add_comment(request):
     content = request.data.get('content')
     task_id = request.data.get('task_id')
-    user_id = request.data.get('user_id')
+    user_id = request.user.id
 
-    if not content or not task_id or not user_id:
-        return Response({'error': 'Content, task_id, and user_id are required'}, status=status.HTTP_400_BAD_REQUEST)
+    if not content or not task_id:
+        return Response({'error': 'Content and task_id are required'}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
         task = Task.objects.get(id=task_id)
@@ -99,7 +92,8 @@ def add_comment(request):
             task=task,
             user=user
         )
-        return Response({'message': 'Comment added successfully'}, status=status.HTTP_201_CREATED)
+        serializer = CommentSerializer(comment)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -144,16 +138,45 @@ class SubtaskViewSet(viewsets.ModelViewSet):
     serializer_class = SubtaskSerializer
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        task_id = self.request.query_params.get('task')
+        if task_id:
+            queryset = queryset.filter(task_id=task_id)
+        return queryset
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def perform_update(self, serializer):
+        subtask = serializer.save()
+        subtask.task.update_completion_status()
+
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        department_id = self.request.query_params.get('department')
+        user_id = self.request.query_params.get('user')
+        project_id = self.request.query_params.get('project')
+
+        if department_id:
+            queryset = queryset.filter(department_id=department_id)
+        if user_id:
+            queryset = queryset.filter(user_id=user_id)
+        if project_id:
+            queryset = queryset.filter(project_id=project_id)
+
+        return queryset
 
     def update(self, request, *args, **kwargs):
         task = self.get_object()
-        if task.assigned_by != request.user:
-            raise PermissionDenied("You did not create this task.")
+        if 'is_completed' in request.data:
+            task.is_completed = request.data['is_completed']
+            task.save()
         return super().update(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
@@ -161,6 +184,12 @@ class TaskViewSet(viewsets.ModelViewSet):
         if task.assigned_by != request.user:
             raise PermissionDenied("You did not create this task.")
         return super().destroy(request, *args, **kwargs)
+
+    def partial_update(self, request, *args, **kwargs):
+        task = self.get_object()
+        response = super().partial_update(request, *args, **kwargs)
+        task.update_completion_status()
+        return response
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -174,8 +203,9 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer):
-        task_id = self.request.data.get('task')
-        task = Task.objects.get(id=task_id)
-        serializer.save(user=self.request.user, task=task)
-
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        task_id = self.request.query_params.get('task')
+        if task_id:
+            queryset = queryset.filter(task_id=task_id)
+        return queryset

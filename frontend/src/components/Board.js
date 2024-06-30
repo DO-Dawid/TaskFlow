@@ -1,4 +1,3 @@
-// src/components/Board.js
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
@@ -18,6 +17,10 @@ function Board() {
         fetchDepartments();
         fetchUsers();
         fetchProjects();
+    }, []);
+
+    useEffect(() => {
+        fetchTasks();
     }, [selectedUser, selectedProject, selectedDepartment]);
 
     const fetchTasks = async () => {
@@ -60,10 +63,6 @@ function Board() {
         } catch (error) {
             console.error('Error fetching users', error);
         }
-    };
-
-    const handleFilterChange = () => {
-        fetchTasks();
     };
 
     return (
@@ -111,24 +110,57 @@ function Board() {
                         </select>
                     </div>
                 </div>
-
             </div>
             <div className="row">
-                {tasks.map(task => (
-                    <div key={task.id} className="col-md-4 mb-4">
-                        <div className="card">
-                            <div className="card-body">
-                                <Link to={`/task/${task.id}`} className="text-decoration-none">
-                                    <h5 className="card-title">{task.title}</h5>
-                                    <p className="card-text">{task.description}</p>
-                                    <p className="card-text"><strong>Assigned to:</strong> {task.user.username}</p>
-                                    <p className="card-text"><strong>Department:</strong> {task.department ? task.department.name : 'None'}</p>
-                                    <p className="card-text"><strong>Project:</strong> {task.project ? task.project.name : 'None'}</p>
-                                </Link>
+                {tasks
+                    .filter(task => !task.is_completed)
+                    .map(task => (
+                        <div key={task.id} className="col-md-4 mb-4">
+                            <div className="card">
+                                <div className="card-body">
+                                    <Link to={`/task/${task.id}`} className="text-decoration-none">
+                                        <h5 className="card-title">{task.title}</h5>
+                                        <p className="card-text">{task.description}</p>
+                                        <p className="card-text"><strong>Assigned to:</strong> {task.user.username}</p>
+                                        <p className="card-text"><strong>Department:</strong> {task.department ? task.department.name : 'None'}</p>
+                                        <p className="card-text"><strong>Project:</strong> {task.project ? task.project.name : 'None'}</p>
+                                        <p className="card-text"><strong>Completion:</strong> {task.completionPercentage}%</p>
+                                        <div className="progress mb-3">
+                                            <div className="progress-bar" role="progressbar" style={{ width: `${task.completionPercentage}%` }}>
+                                                {task.completionPercentage}%
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+            </div>
+            <h3 className="mt-5">Completed Tasks</h3>
+            <div className="row">
+                {tasks
+                    .filter(task => task.is_completed)
+                    .map(task => (
+                        <div key={task.id} className="col-md-4 mb-4">
+                            <div className="card bg-light">
+                                <div className="card-body">
+                                    <Link to={`/task/${task.id}`} className="text-decoration-none">
+                                        <h5 className="card-title">{task.title}</h5>
+                                        <p className="card-text">{task.description}</p>
+                                        <p className="card-text"><strong>Assigned to:</strong> {task.user.username}</p>
+                                        <p className="card-text"><strong>Department:</strong> {task.department ? task.department.name : 'None'}</p>
+                                        <p className="card-text"><strong>Project:</strong> {task.project ? task.project.name : 'None'}</p>
+                                        <p className="card-text"><strong>Completion:</strong> {task.completionPercentage}%</p>
+                                        <div className="progress mb-3">
+                                            <div className="progress-bar" role="progressbar" style={{ width: `${task.completionPercentage}%` }}>
+                                                {task.completionPercentage}%
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
             </div>
         </div>
     );

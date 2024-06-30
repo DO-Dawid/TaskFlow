@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const EditTask = () => {
     const { id } = useParams();
@@ -82,9 +82,7 @@ const EditTask = () => {
                 project_id: projectId,
                 assigned_by_id: assignedById,
             }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                headers: { Authorization: `Bearer ${token}` }
             });
             setSuccess('Task updated successfully');
             setError('');
@@ -100,75 +98,91 @@ const EditTask = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container mt-5">
             <h2>Edit Task</h2>
+            {error && <p className="text-danger">{error}</p>}
+            {success && <p className="text-success">{success}</p>}
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Title</label>
+                <div className="mb-3">
+                    <label htmlFor="title" className="form-label">Title</label>
                     <input
                         type="text"
                         className="form-control"
+                        id="title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
                     />
                 </div>
-                <div className="form-group">
-                    <label>Description</label>
+                <div className="mb-3">
+                    <label htmlFor="description" className="form-label">Description</label>
                     <input
                         type="text"
                         className="form-control"
+                        id="description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         required
                     />
                 </div>
-                <div className="form-group">
-                    <label>User</label>
-                    <select className="form-control" value={userId} onChange={(e) => setUserId(e.target.value)} required>
+                <div className="mb-3">
+                    <label htmlFor="user" className="form-label">User</label>
+                    <select
+                        className="form-select"
+                        id="user"
+                        value={userId}
+                        onChange={(e) => setUserId(e.target.value)}
+                        required
+                    >
                         <option value="">Select User</option>
                         {users.map(user => (
-                            <option key={user.id} value={user.id}>
-                                {user.username}
-                            </option>
+                            <option key={user.id} value={user.id}>{user.username}</option>
                         ))}
                     </select>
                 </div>
-                <div className="form-group">
-                    <label>Department</label>
-                    <select className="form-control" value={departmentId} onChange={(e) => setDepartmentId(e.target.value)}>
+                <div className="mb-3">
+                    <label htmlFor="department" className="form-label">Department</label>
+                    <select
+                        className="form-select"
+                        id="department"
+                        value={departmentId}
+                        onChange={(e) => setDepartmentId(e.target.value)}
+                    >
                         <option value="">Select Department</option>
                         {departments.map(department => (
-                            <option key={department.id} value={department.id}>
-                                {department.name}
-                            </option>
+                            <option key={department.id} value={department.id}>{department.name}</option>
                         ))}
                     </select>
                 </div>
-                <div className="form-group">
-                    <label>Project</label>
-                    <select className="form-control" value={projectId} onChange={(e) => setProjectId(e.target.value)}>
+                <div className="mb-3">
+                    <label htmlFor="project" className="form-label">Project</label>
+                    <select
+                        className="form-select"
+                        id="project"
+                        value={projectId}
+                        onChange={(e) => setProjectId(e.target.value)}
+                    >
                         <option value="">Select Project</option>
                         {projects.map(project => (
-                            <option key={project.id} value={project.id}>
-                                {project.name}
-                            </option>
+                            <option key={project.id} value={project.id}>{project.name}</option>
                         ))}
                     </select>
                 </div>
-                <div className="form-group">
-                    <label>Assigned By</label>
-                    <select className="form-control" value={assignedById} onChange={(e) => setAssignedById(e.target.value)} required>
+                <div className="mb-3">
+                    <label htmlFor="assignedBy" className="form-label">Assigned By</label>
+                    <select
+                        className="form-select"
+                        id="assignedBy"
+                        value={assignedById}
+                        onChange={(e) => setAssignedById(e.target.value)}
+                        required
+                    >
                         <option value="">Select User</option>
                         {users.map(user => (
-                            <option key={user.id} value={user.id}>
-                                {user.username}
-                            </option>
+                            <option key={user.id} value={user.id}>{user.username}</option>
                         ))}
                     </select>
                 </div>
-                {error && <p className="text-danger">{error}</p>}
-                {success && <p className="text-success">{success}</p>}
                 <button type="submit" className="btn btn-primary">Update Task</button>
                 <button type="button" className="btn btn-secondary" onClick={() => navigate(`/task/${id}`)}>Cancel</button>
             </form>

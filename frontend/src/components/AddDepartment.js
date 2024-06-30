@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
 
 const AddDepartment = () => {
     const [name, setName] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -13,6 +15,7 @@ const AddDepartment = () => {
             setSuccess('Department added successfully');
             setError('');
             setName('');
+            navigate(`/board`);
         } catch (err) {
             setError('Failed to add department. Please try again.');
             setSuccess('');

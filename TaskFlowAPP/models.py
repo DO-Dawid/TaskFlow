@@ -1,17 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Role(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
+
 class Department(models.Model):
     name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
+
 
 class Project(models.Model):
     name = models.CharField(max_length=200)
@@ -20,6 +23,7 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Task(models.Model):
     title = models.CharField(max_length=200)
@@ -40,13 +44,36 @@ class Task(models.Model):
         completed_subtasks = subtasks.filter(is_completed=True).count()
         return int((completed_subtasks / subtasks.count()) * 100)
 
+    def update_completion_status(self):
+        if self.subtasks.filter(is_completed=False).exists():
+            self.is_completed = False
+        else:
+            self.is_completed = True
+        self.save()
+
+
 class Subtask(models.Model):
+    STATUS_CHOICES = [
+        ('new', 'New'),
+        ('in_progress', 'In Progress'),
+        ('done', 'Done'),
+    ]
+
     title = models.CharField(max_length=200)
     is_completed = models.BooleanField(default=False)
     task = models.ForeignKey(Task, related_name='subtasks', on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new')
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if self.status == 'done':
+            self.is_completed = True
+        else:
+            self.is_completed = False
+        super().save(*args, **kwargs)
+        self.task.update_completion_status()
 
 class Board(models.Model):
     name = models.CharField(max_length=200)
@@ -54,6 +81,7 @@ class Board(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Comment(models.Model):
     task = models.ForeignKey(Task, related_name='comments', on_delete=models.CASCADE)

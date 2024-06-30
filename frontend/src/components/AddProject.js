@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
 
 const AddProject = () => {
@@ -8,6 +9,7 @@ const AddProject = () => {
     const [departments, setDepartments] = useState([]);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchDepartments = async () => {
@@ -37,6 +39,7 @@ const AddProject = () => {
             });
             setSuccess('Project added successfully');
             setError('');
+            navigate(`/board`);
         } catch (err) {
             setError('Failed to add project. Please try again.');
             setSuccess('');

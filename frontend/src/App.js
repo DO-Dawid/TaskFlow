@@ -6,14 +6,13 @@ import AddTask from './components/AddTask';
 import AddProject from './components/AddProject';
 import AddDepartment from './components/AddDepartment';
 import AddSubtask from './components/AddSubtask';
-import AddBoard from './components/AddBoard';
 import Home from './components/Home';
 import Menu from './components/Menu';
 import ProtectedRoute from './components/ProtectedRoute';
 import Board from './components/Board';
-import TaskDetail from "./components/TaskDetails";
+import TaskDetail from './components/TaskDetails';
 import EditTask from './components/EditTask';
-import AccountSuccess from './components/AccountSuccess'; // Import the new component
+import AccountSuccess from './components/AccountSuccess';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -45,14 +44,13 @@ function App() {
                     <Route path="/addtask" element={<ProtectedRoute><AddTask /></ProtectedRoute>} />
                     <Route path="/addproject" element={<ProtectedRoute><AddProject /></ProtectedRoute>} />
                     <Route path="/adddepartment" element={<ProtectedRoute><AddDepartment /></ProtectedRoute>} />
-                    <Route path="/addsubtask" element={<ProtectedRoute><AddSubtask /></ProtectedRoute>} />
-                    <Route path="/addboard" element={<ProtectedRoute><AddBoard /></ProtectedRoute>} />
+                    <Route path="/addsubtask/:taskId" element={<ProtectedRoute><AddSubtask /></ProtectedRoute>} />
                     <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
                     <Route path="/board" element={<ProtectedRoute><Board /></ProtectedRoute>} />
                     <Route path="/task/:id" element={<ProtectedRoute><TaskDetail /></ProtectedRoute>} />
                     <Route path="/edittask/:id" element={<ProtectedRoute><EditTask /></ProtectedRoute>} />
-                    <Route path="/account-success" element={<AccountSuccess />} /> {/* Add this line */}
                     <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+                    <Route path="/account-success" element={<AccountSuccess />} />
                 </Routes>
             </div>
         </Router>

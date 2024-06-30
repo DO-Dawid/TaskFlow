@@ -1,34 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../axiosInstance';
-import AxiosInstance from "../axiosInstance";
 
 const AddSubtask = () => {
+    const { taskId } = useParams();
+    const navigate = useNavigate();
     const [title, setTitle] = useState('');
-    const [task, setTask] = useState('');
-    const [tasks, setTasks] = useState([]);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-
-    useEffect(() => {
-        const fetchTasks = async () => {
-            try {
-                const response = await AxiosInstance.get('http://localhost:8000/api/tasks/');
-                setTasks(response.data);
-            } catch (err) {
-                console.error('Failed to fetch tasks:', err);
-            }
-        };
-
-        fetchTasks();
-    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
         try {
-            const response = await axiosInstance.post('http://localhost:8000/api/subtasks/', {
+            const response = await axiosInstance.post('subtasks/', {
                 title,
-                task,
+                task: taskId,
+                status: 'new'
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -36,6 +24,7 @@ const AddSubtask = () => {
             });
             setSuccess('Subtask added successfully');
             setError('');
+            navigate(`/task/${taskId}`);
         } catch (err) {
             setError('Failed to add subtask. Please try again.');
             setSuccess('');
@@ -43,32 +32,23 @@ const AddSubtask = () => {
     };
 
     return (
-        <div>
+        <div className="container">
             <h2>Add Subtask</h2>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Title</label>
+                <div className="mb-3">
+                    <label className="form-label">Title</label>
                     <input
                         type="text"
+                        className="form-control"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
                     />
                 </div>
-                <div>
-                    <label>Task</label>
-                    <select value={task} onChange={(e) => setTask(e.target.value)} required>
-                        <option value="">Select Task</option>
-                        {tasks.map(task => (
-                            <option key={task.id} value={task.id}>
-                                {task.title}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                {error && <p style={{color: 'red'}}>{error}</p>}
-                {success && <p style={{color: 'green'}}>{success}</p>}
-                <button type="submit">Add Subtask</button>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {success && <p style={{ color: 'green' }}>{success}</p>}
+                <button type="submit" className="btn btn-primary">Add Subtask</button>
+                <button type="button" className="btn btn-secondary" onClick={() => navigate(`/task/${taskId}`)}>Cancel</button>
             </form>
         </div>
     );
